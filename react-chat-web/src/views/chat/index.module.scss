@@ -1,0 +1,30 @@
+.layout {
+  background-color: rgb(245, 245, 245);
+  height: 100%;
+  padding-top: 1rem;
+
+  .chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background-color: rgb(245, 245, 245);
+    height: 60px;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    .chat-header-title {
+      font-size: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+  .chat-message {
+    height: 70%;
+  }
+  .chat-input {
+    width: 100%;
+    border-top: 1px solid #ccc;
+    height: 30%;
+  }
+}

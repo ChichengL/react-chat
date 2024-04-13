@@ -1,0 +1,22 @@
+.contact-item {
+  width: 90%;
+  height: 100px;
+  display: flex;
+  margin: 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+  align-items: center;
+  justify-content: center;
+  transition: 0.4s ease-in-out;
+  gap: 1rem;
+  &:hover {
+    background-color: rgb(232, 232, 232);
+  }
+}
+.active {
+  color: white;
+  background-color: royalblue;
+  &:hover {
+    background-color: royalblue;
+  }
+}
