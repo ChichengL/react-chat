@@ -1,7 +1,7 @@
 const sequelize = require('sequelize');
 
 
-const Sequelize = new sequelize('chatroom','root','chen030127',{
+const Sequelize = new sequelize('chatroom','root','123456',{
     host:'localhost',
     dialect:'mysql',
     timezone:'+08:00'
