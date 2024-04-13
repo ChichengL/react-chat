@@ -10,9 +10,12 @@ import Avatar from '@/components/avatar.tsx';
 import axios from 'axios';
 import { allUsersRoute, host } from '@/services/AllRoutes';
 import Contacts from '@/components/contacts';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
 const { Content, Sider } = Layout;
+export const CustomContext = React.createContext<{ socket: Socket | null }>({
+  socket: null
+});
 
 export default (): React.ReactElement => {
   const [selectedKeys, setSelectedKeys] = React.useState(['/home/chat']);
@@ -29,7 +32,6 @@ export default (): React.ReactElement => {
       );
     }
   }, []);
-
   React.useEffect(() => {
     async function fetchConcats() {
       if (currentUser) {
@@ -41,16 +43,17 @@ export default (): React.ReactElement => {
         } else {
           navigate('/setAvatar');
         }
+        // 连接socket
         if (!socketRef.current) {
           socketRef.current = io(host) as any;
-          socketRef.current.emit('add-user', { userId: currentUser.id });
+          (socketRef.current as any).emit('add-user', currentUser.id);
         }
       }
     }
     fetchConcats();
     return () => {
       if (socketRef.current) {
-        socketRef.current.disconnect();
+        (socketRef.current as any).disconnect();
       }
     };
   }, [currentUser]);
@@ -90,7 +93,9 @@ export default (): React.ReactElement => {
         </Sider>
         <Content className={style['content']}>
           {/* 根据路由展示*/}
-          <Outlet />
+          <CustomContext.Provider value={{ socket: socketRef.current }}>
+            <Outlet />
+          </CustomContext.Provider>
         </Content>
       </Layout>
     </Layout>

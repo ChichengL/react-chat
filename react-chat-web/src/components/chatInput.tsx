@@ -33,6 +33,12 @@ const chatInput: FC<IProps> = (props) => {
       setMsg('');
     }
   };
+  const handleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && event.shiftKey === false) {
+      event.preventDefault(); // 阻止默认的换行行为
+      handleSubmit(event);
+    }
+  };
 
   return (
     <div className="chatInput-container">
@@ -56,6 +62,7 @@ const chatInput: FC<IProps> = (props) => {
           placeholder="请输入消息"
           value={msg}
           onChange={(e) => setMsg(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
         <button className="submit">
           <IoMdSend />

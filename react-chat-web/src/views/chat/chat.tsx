@@ -6,18 +6,21 @@ import Avatar from '@/components/avatar';
 import Logout from '@/components/logout';
 import ChatInput from '@/components/chatInput';
 import Messages from '@/components/messages';
-import { useNavigate,useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import axios from 'axios';
 import { sendMessgaeRoute, getAllMessagesRoute } from '@/services/AllRoutes';
+import { CustomContext } from '../home/home';
 
 const chat = (): React.ReactElement => {
-    const location = useLocation();
+  const location = useLocation();
   const currentChat = location.state?.friend;
   const currentUser = JSON.parse(
     localStorage.getItem('chatRoomUser') as string
   );
+  const { socket } = React.useContext(CustomContext);
+  const [arrivaleMessage, setArrivaleMessage] = React.useState<any>(null);
   const navigate = useNavigate();
-  const [messages, setMessages] = React.useState([]);
+  const [messages, setMessages] = React.useState<any[]>([]);
   const handleSendMsg = async (msg: string) => {
     const from = currentUser.id;
     const to = currentChat.id;
@@ -31,13 +34,28 @@ const chat = (): React.ReactElement => {
     } else {
       AntdMessage.error(data.msg);
     }
+    socket?.emit('send-msg', {
+      receiverId: currentChat.id,
+      senderId: currentUser.id,
+      text: msg
+    });
+    const newMessages: any[] = [...messages];
+
+    newMessages.push({
+      text: msg,
+      recieverId: currentChat.id,
+      senderId: currentUser.id
+    });
+    setMessages(newMessages);
   };
   const getAllMessages = async () => {
-    const { data } = await axios.post(getAllMessagesRoute, {
-      from: currentUser.id,
-      to: currentChat.id
-    });
-    setMessages(data.messages);
+    if (currentChat) {
+      const { data } = await axios.post(getAllMessagesRoute, {
+        from: currentUser.id,
+        to: currentChat.id
+      });
+      setMessages(data.messages);
+    }
   };
   React.useEffect(() => {
     console.log('chat currentChat', currentChat);
@@ -47,7 +65,26 @@ const chat = (): React.ReactElement => {
       getAllMessages();
     }
   }, [currentChat]);
-  React.useEffect(() => {});
+  React.useEffect(() => {
+    if (socket) {
+      socket.on('msg-recieve', (msg: any) => {
+        setArrivaleMessage({
+          senderId: currentChat.id,
+          receiverId: currentUser.id,
+          text: msg
+        });
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    console.log('arrivaleMessage', arrivaleMessage);
+    if (arrivaleMessage) {
+      setMessages((prev) => [...prev, arrivaleMessage]);
+      setArrivaleMessage(null);
+    }
+  }, [arrivaleMessage]);
+
   return (
     <Layout className={style['layout']}>
       <Header className={style['chat-header']}>

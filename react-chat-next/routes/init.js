@@ -3,7 +3,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 const userRoutes = require('./userRoutes')
 const messageRoutes = require('./messageRoutes')
-const socketIO = require('socket.io')
+const socketIO = require('socket.io');
 
 const app = express();
 require('dotenv').config();
@@ -43,10 +43,18 @@ io.on("connection",(socket)=>{
         global.onlineUsers.set(userId,socket.id)
     })
     socket.on("send-msg",(data)=>{
-        const sendUserSoket = global.onlineUsers.get(data.to)
+        const sendUserSoket = global.onlineUsers.get(data.receiverId)
         if(sendUserSoket){
-            socket.to(sendUserSoket).emit("msg-recieve",data.msg)
+            socket.to(sendUserSoket).emit("msg-recieve",data.text)
         }
+    })
+    socket.on("disconnect",()=>{
+        global.onlineUsers.forEach((value,key)=>{
+            if(value === socket.id){
+                global.onlineUsers.delete(key)
+            }
+        })
+        console.log('io disconnect',onlineUsers)
     })
 })
 
