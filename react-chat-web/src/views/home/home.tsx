@@ -7,7 +7,8 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Outlet, useNavigate } from 'react-router';
 //@ts-ignore
 import Avatar from '@/components/avatar.tsx';
-import axios from 'axios';
+import axios from '@/services/request';
+
 import { allUsersRoute, host } from '@/services/AllRoutes';
 import Contacts from '@/components/contacts';
 import { io, Socket } from 'socket.io-client';

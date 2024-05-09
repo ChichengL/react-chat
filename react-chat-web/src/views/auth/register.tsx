@@ -9,7 +9,8 @@ import {
   passwordRules,
   confirmPasswordRules
 } from './configuration';
-import axios from 'axios';
+import axios from '@/services/request';
+
 import { registerRoute } from '@/services/AllRoutes';
 
 export default (): React.ReactElement => {

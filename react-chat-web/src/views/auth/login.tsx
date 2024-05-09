@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 import { usernameRules, passwordRules } from './configuration';
 import { loginRoute } from '@/services/AllRoutes';
 import axios from '@/services/request';
-
 const wrapperCol = { offset: 6, span: 16 };
 
 export default function Login() {
@@ -39,7 +38,8 @@ export default function Login() {
       password
     });
       const { data } = res;
-    console.log('login res', res);
+      // console.log('login res', res);
+      
     setFormData({ ...formData, username, password });
     setFormSubmitStatus(data);
   };
@@ -47,7 +47,7 @@ export default function Login() {
   React.useEffect(() => {
     if (formSubmitStatus) {
       if (formSubmitStatus.code == 200) {
-        messageApi.success('登录成功');
+          messageApi.success('登录成功');
         localStorage.setItem(
           `chatRoomUser`,
           JSON.stringify(formSubmitStatus.user)

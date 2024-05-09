@@ -7,7 +7,8 @@ import Logout from '@/components/logout';
 import ChatInput from '@/components/chatInput';
 import Messages from '@/components/messages';
 import { useNavigate, useLocation } from 'react-router';
-import axios from 'axios';
+import axios from '@/services/request';
+
 import { sendMessgaeRoute, getAllMessagesRoute } from '@/services/AllRoutes';
 import { CustomContext } from '../home/home';
 

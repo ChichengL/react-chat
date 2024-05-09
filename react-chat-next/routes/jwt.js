@@ -6,11 +6,14 @@ const cookieKey = 'token'
 exports.publish = ( res,maxAge = 3600, info = {}) => {
     const token = jwt.sign(info, secret, { expiresIn: maxAge })
     //允许获取cookie
-    res.cookie(cookieKey, token, { maxAge: maxAge * 1000, httpOnly: true ,path:'/'})
+    res.cookie(cookieKey, token, { maxAge: maxAge * 1000 ,path:'/'})
     res.header('Authorization', `Bearer ${token}`)
 }
 
 exports.verify = (req) => { 
+    console.log('req.headers', req.headers);
+
+    console.log('req.cookies.token', req.cookies['token']);
     let token = req.headers.authorization || req.cookies[cookieKey]
     console.log('token', token)
     if (!token) {
