@@ -1,16 +1,19 @@
 const { pathToRegexp } = require('path-to-regexp')
 const jwt = require('./jwt')
 const needTokenApi = [
-    { method: "POST", path: "/setAvatar" },
-    { method: "GET", path: "/allUsers" }
+    { method: "POST", path: "/api/auth/setAvatar" },
+    { method: "GET", path: "/api/auth/allUsers" },
+    { method: "POST", path: "/api/messages/addmsg" },
+    { method: "POST", path: "/api/messages/getmsgs" }
 ]
 module.exports = (req, res, next) => {
+    console.log('req.path', req.path)
+    console.log('req.method', req.method)
     const apis = needTokenApi.filter(api => {
         if (api.method === req.method && pathToRegexp(api.path).test(req.path)) {
             return true;
         }
     })
-    console.log(apis)
     if (apis.length === 0) {
         return next();
     }

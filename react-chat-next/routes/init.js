@@ -8,8 +8,11 @@ const tokenMiddleWare = require('./tokenMiddleWare');
 
 const app = express();
 require('dotenv').config();
-
-app.use(cors())
+//允许跨域
+app.use(cors({
+    origin: ["http://localhost:3000", "http://localhost:5000", "http://localhost:5173", "http://localhost:5174"],
+    credentials: true
+}))
 app.use(express.json())
 app.use(require('cookie-parser')())
 app.use(tokenMiddleWare);

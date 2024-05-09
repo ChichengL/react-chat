@@ -13,7 +13,7 @@ import style from './index.module.scss';
 import { Link } from 'react-router-dom';
 import { usernameRules, passwordRules } from './configuration';
 import { loginRoute } from '@/services/AllRoutes';
-import axios from 'axios';
+import axios from '@/services/request';
 
 const wrapperCol = { offset: 6, span: 16 };
 
