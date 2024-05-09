@@ -16,6 +16,7 @@
     "@emoji-mart/react": "^1.1.1",
     "@reduxjs/toolkit": "^2.2.3",
     "@types/uuid": "^9.0.8",
+    "ahooks": "^3.7.11",
     "antd": "^5.16.1",
     "axios": "^1.6.8",
     "buffer": "^6.0.3",

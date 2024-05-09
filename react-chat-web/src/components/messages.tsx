@@ -21,10 +21,29 @@ export default function messages({ messages, from, to }: IMessagesProps) {
       });
     }
   }, [messages]);
+    //虚拟列表进行优化,每个子项不定高,只渲染可见区域的子项,减少渲染压力
+    const [visibledRange,setVisibledRange] = React.useState([0, 6]); //可见区域的起始索引和结束索引
+    const intersectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { 
+                const index = parseInt(entry.target.getAttribute('data-index') as string, 10);
+                if (index >= visibledRange[1]) {
+                    // 加载更多
+                    setVisibledRange([visibledRange[0]+6, visibledRange[1] + 6])                  
+                } else {
+                    // 继续加载
+                    
+                }
+            }
+        })
+    })
+    React.useEffect(() => { 
+        
+    },[])
   return (
     <div className="chat-messages" >
       {messages.map((message, index) => (
-        <div key={uuidv4()}>
+        <div key={uuidv4()} data-index={index}>
           <div
             className={`message ${message.senderId === from.id ? 'sender' : 'receiver'}`}
             key={message.id}
@@ -38,4 +57,9 @@ export default function messages({ messages, from, to }: IMessagesProps) {
       <span ref={ref}></span>
     </div>
   );
+}
+
+//虚拟列表优化
+const HOC = (Component: any) => {
+    
 }

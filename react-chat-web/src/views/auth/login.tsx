@@ -34,11 +34,12 @@ export default function Login() {
   };
   const onFinish: FormProps<LoginFormType>['onFinish'] = async (values) => {
     const { username, password } = values;
-    const { data } = await axios.post(loginRoute, {
+    const  res  = await axios.post(loginRoute, {
       username,
       password
     });
-    console.log('login data', data);
+      const { data } = res;
+    console.log('login res', res);
     setFormData({ ...formData, username, password });
     setFormSubmitStatus(data);
   };

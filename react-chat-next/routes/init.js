@@ -4,12 +4,16 @@ const mysql = require('mysql2');
 const userRoutes = require('./userRoutes')
 const messageRoutes = require('./messageRoutes')
 const socketIO = require('socket.io');
+const tokenMiddleWare = require('./tokenMiddleWare');
 
 const app = express();
 require('dotenv').config();
 
 app.use(cors())
 app.use(express.json())
+app.use(require('cookie-parser')())
+app.use(tokenMiddleWare);
+
 app.use("/api/auth",userRoutes)
 app.use('/api/messages',messageRoutes)
 

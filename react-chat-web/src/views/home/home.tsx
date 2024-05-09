@@ -61,7 +61,7 @@ export default (): React.ReactElement => {
     navigate(key);
     setSelectedKeys([key]);
   };
-  const hanleClickFriend = (item: any) => {
+  const handleClickFriend = (item: any) => {
     navigate('/home/chat', {
       state: { friend: item }
     });
@@ -88,7 +88,7 @@ export default (): React.ReactElement => {
             ></Input>
           </div>
           <div className={style['content']}>
-            <Contacts friends={contacts} hanleClickFriend={hanleClickFriend} />
+            <Contacts friends={contacts} handleClickFriend={handleClickFriend} />
           </div>
         </Sider>
         <Content className={style['content']}>
