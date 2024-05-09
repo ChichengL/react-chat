@@ -7,8 +7,7 @@ const needTokenApi = [
     { method: "POST", path: "/api/messages/getmsgs" }
 ]
 module.exports = (req, res, next) => {
-    console.log('req.path', req.path)
-    console.log('req.method', req.method)
+
     const apis = needTokenApi.filter(api => {
         if (api.method === req.method && pathToRegexp(api.path).test(req.path)) {
             return true;

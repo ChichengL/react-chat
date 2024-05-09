@@ -1,9 +1,9 @@
 export const host = 'http://localhost:10001';
 
-export const registerRoute = `${host}/api/auth/register`;
-export const loginRoute = `${host}/api/auth/login`;
-export const setAvatarRoute = `${host}/api/auth/setAvatar`;
-export const allUsersRoute = `${host}/api/auth/allUsers`;
+export const registerRoute = `/api/auth/register`;
+export const loginRoute = `/api/auth/login`;
+export const setAvatarRoute = `/api/auth/setAvatar`;
+export const allUsersRoute = `/api/auth/allUsers`;
 
-export const sendMessgaeRoute = `${host}/api/messages/addmsg`;
-export const getAllMessagesRoute = `${host}/api/messages/getmsgs`;
+export const sendMessgaeRoute = `/api/messages/addmsg`;
+export const getAllMessagesRoute = `/api/messages/getmsgs`;

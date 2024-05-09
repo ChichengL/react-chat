@@ -11,9 +11,7 @@ exports.publish = ( res,maxAge = 3600, info = {}) => {
 }
 
 exports.verify = (req) => { 
-    console.log('req.headers', req.headers);
 
-    console.log('req.cookies.token', req.cookies['token']);
     let token = req.headers.authorization || req.cookies[cookieKey]
     console.log('token', token)
     if (!token) {
